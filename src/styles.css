@@ -1,1 +1,143 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+:root {
+  /* Primary Brand Colors */
+  --sacco-navy: #1E3A8A;
+  --sacco-green: #059669;
+  --sacco-gold: #D97706;
+  
+  /* Secondary Colors */
+  --sacco-blue: #3B82F6;
+  --sacco-mint: #10B981;
+  --sacco-orange: #F59E0B;
+  
+  /* Neutral Colors */
+  --sacco-dark: #1F2937;
+  --sacco-gray: #6B7280;
+  --sacco-light: #F3F4F6;
+  --sacco-white: #FFFFFF;
+  
+  /* Semantic Colors */
+  --sacco-success: #10B981;
+  --sacco-warning: #F59E0B;
+  --sacco-error: #EF4444;
+  --sacco-info: #3B82F6;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--sacco-light);
+  color: var(--sacco-dark);
+}
+
+/* Bootstrap Color Overrides */
+.btn-primary {
+  background-color: var(--sacco-navy);
+  border-color: var(--sacco-navy);
+}
+
+.btn-primary:hover {
+  background-color: #1E40AF;
+  border-color: #1E40AF;
+}
+
+.btn-success {
+  background-color: var(--sacco-green);
+  border-color: var(--sacco-green);
+}
+
+.btn-success:hover {
+  background-color: #047857;
+  border-color: #047857;
+}
+
+.btn-warning {
+  background-color: var(--sacco-gold);
+  border-color: var(--sacco-gold);
+  color: white;
+}
+
+.btn-warning:hover {
+  background-color: #B45309;
+  border-color: #B45309;
+  color: white;
+}
+
+.bg-primary {
+  background-color: var(--sacco-navy) !important;
+}
+
+.bg-success {
+  background-color: var(--sacco-success) !important;
+}
+
+.bg-warning {
+  background-color: var(--sacco-warning) !important;
+}
+
+.bg-info {
+  background-color: var(--sacco-info) !important;
+}
+
+.text-primary {
+  color: var(--sacco-navy) !important;
+}
+
+.text-success {
+  color: var(--sacco-success) !important;
+}
+
+.text-warning {
+  color: var(--sacco-gold) !important;
+}
+
+.text-muted {
+  color: var(--sacco-gray) !important;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(31, 41, 55, 0.08);
+  background-color: var(--sacco-white);
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #D1D5DB;
+  padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+  border-color: var(--sacco-blue);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+.navbar-dark {
+  background-color: var(--sacco-navy) !important;
+}
+
+.alert-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: var(--sacco-success);
+  color: #065F46;
+}
+
+.alert-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: var(--sacco-error);
+  color: #991B1B;
+}
+
+.alert-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: var(--sacco-warning);
+  color: #92400E;
+}

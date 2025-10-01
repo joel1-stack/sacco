@@ -1,0 +1,55 @@
+<app-header></app-header>
+
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <div>
+        <h1 class="h3 mb-0">My Loans</h1>
+        <p class="text-muted">Track your loan applications and payments</p>
+      </div>
+      <button class="btn btn-primary">Apply for Loan</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Loan Type</th>
+                  <th>Original Amount</th>
+                  <th>Balance</th>
+                  <th>Status</th>
+                  <th>Next Payment</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let loan of loans">
+                  <td>{{ loan.type }}</td>
+                  <td>KSh {{ loan.amount | number }}</td>
+                  <td>KSh {{ loan.balance | number }}</td>
+                  <td>
+                    <span class="badge" 
+                          [class.bg-success]="loan.status === 'Active'"
+                          [class.bg-secondary]="loan.status === 'Completed'">
+                      {{ loan.status }}
+                    </span>
+                  </td>
+                  <td>{{ loan.nextPayment ? (loan.nextPayment | date:'short') : 'N/A' }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary me-2">View</button>
+                    <button class="btn btn-sm btn-outline-success" *ngIf="loan.status === 'Active'">Pay</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

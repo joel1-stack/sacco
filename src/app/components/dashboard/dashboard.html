@@ -1,0 +1,179 @@
+<app-animated-background></app-animated-background>
+<app-header></app-header>
+
+<div class="container-fluid py-4" style="position: relative; z-index: 1;">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 mb-0">Dashboard</h1>
+      <p class="text-muted">Welcome back! Here's your financial overview.</p>
+    </div>
+  </div>
+
+  <!-- Financial Summary Cards -->
+  <div class="row mb-4" *ngIf="!loading">
+    <div class="col-md-3 mb-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title">Total Savings</h6>
+              <h4 class="mb-0">KSh {{ financialSummary.totalSavings | number }}</h4>
+            </div>
+            <div class="align-self-center">
+              <i class="fas fa-piggy-bank fa-2x opacity-75"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title">Total Shares</h6>
+              <h4 class="mb-0">KSh {{ financialSummary.totalShares | number }}</h4>
+            </div>
+            <div class="align-self-center">
+              <i class="fas fa-chart-pie fa-2x opacity-75"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-warning text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title">Active Loans</h6>
+              <h4 class="mb-0">KSh {{ financialSummary.activeLoans | number }}</h4>
+            </div>
+            <div class="align-self-center">
+              <i class="fas fa-hand-holding-usd fa-2x opacity-75"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title">Available Credit</h6>
+              <h4 class="mb-0">KSh {{ financialSummary.availableCredit | number }}</h4>
+            </div>
+            <div class="align-self-center">
+              <i class="fas fa-credit-card fa-2x opacity-75"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2 col-6 mb-3">
+              <button class="btn btn-outline-primary w-100" (click)="requireAuth('/transactions/deposit')">
+                <i class="fas fa-plus-circle d-block mb-2"></i>
+                Deposit
+              </button>
+            </div>
+            <div class="col-md-2 col-6 mb-3">
+              <button class="btn btn-outline-danger w-100" (click)="requireAuth('/transactions/withdraw')">
+                <i class="fas fa-minus-circle d-block mb-2"></i>
+                Withdraw
+              </button>
+            </div>
+            <div class="col-md-2 col-6 mb-3">
+              <button class="btn btn-outline-info w-100" (click)="requireAuth('/transactions/transfer')">
+                <i class="fas fa-exchange-alt d-block mb-2"></i>
+                Transfer
+              </button>
+            </div>
+            <div class="col-md-2 col-6 mb-3">
+              <button class="btn btn-outline-success w-100" (click)="requireAuth('/loans/apply')">
+                <i class="fas fa-file-contract d-block mb-2"></i>
+                Apply Loan
+              </button>
+            </div>
+            <div class="col-md-2 col-6 mb-3">
+              <button class="btn btn-outline-warning w-100" (click)="requireAuth('/loans/repayment')">
+                <i class="fas fa-money-bill-wave d-block mb-2"></i>
+                Loan Payment
+              </button>
+            </div>
+            <div class="col-md-2 col-6 mb-3">
+              <button class="btn btn-outline-secondary w-100" (click)="requireAuth('/transactions')">
+                <i class="fas fa-list d-block mb-2"></i>
+                View All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Recent Transactions</h5>
+          <button class="btn btn-sm btn-outline-primary" (click)="requireAuth('/transactions')">View All</button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive" *ngIf="!loading">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaction of recentTransactions">
+                  <td>
+                    <span class="badge" 
+                          [class.bg-success]="transaction.amount > 0"
+                          [class.bg-danger]="transaction.amount < 0">
+                      {{ transaction.type }}
+                    </span>
+                  </td>
+                  <td>{{ transaction.description }}</td>
+                  <td [class.text-success]="transaction.amount > 0" 
+                      [class.text-danger]="transaction.amount < 0">
+                    KSh {{ transaction.amount | number }}
+                  </td>
+                  <td>{{ transaction.date | date:'short' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-center py-4" *ngIf="loading">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

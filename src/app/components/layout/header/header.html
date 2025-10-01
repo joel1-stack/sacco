@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink="/dashboard">
+      SaccoNova
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/accounts" routerLinkActive="active">Accounts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/loans" routerLinkActive="active">Loans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/transactions" routerLinkActive="active">Transactions</a>
+        </li>
+      </ul>
+
+      <div class="navbar-nav" *ngIf="currentUser">
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" 
+             href="#" 
+             (click)="toggleUserMenu()" 
+             [class.show]="showUserMenu">
+            <div class="user-avatar me-2">
+              {{ currentUser.firstName?.charAt(0) }}{{ currentUser.lastName?.charAt(0) }}
+            </div>
+            {{ currentUser.firstName }} {{ currentUser.lastName }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="showUserMenu">
+            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+            <li><a class="dropdown-item" routerLink="/settings">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

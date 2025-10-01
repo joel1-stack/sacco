@@ -1,0 +1,77 @@
+.card {
+  border: none;
+  box-shadow: 0 4px 12px rgba(31, 41, 55, 0.08);
+  transition: all 0.3s ease;
+  background: var(--sacco-white);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(31, 41, 55, 0.12);
+}
+
+/* Financial Summary Cards */
+.bg-primary { 
+  background: linear-gradient(135deg, var(--sacco-navy) 0%, var(--sacco-blue) 100%) !important; 
+}
+
+.bg-success { 
+  background: linear-gradient(135deg, var(--sacco-green) 0%, var(--sacco-mint) 100%) !important; 
+}
+
+.bg-warning { 
+  background: linear-gradient(135deg, var(--sacco-gold) 0%, var(--sacco-orange) 100%) !important; 
+}
+
+.bg-info { 
+  background: linear-gradient(135deg, var(--sacco-blue) 0%, var(--sacco-info) 100%) !important; 
+}
+
+/* Quick Action Buttons */
+.btn-outline-primary {
+  border-color: var(--sacco-navy);
+  color: var(--sacco-navy);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--sacco-navy);
+  border-color: var(--sacco-navy);
+  transform: translateY(-2px);
+}
+
+.btn-outline-success {
+  border-color: var(--sacco-green);
+  color: var(--sacco-green);
+}
+
+.btn-outline-success:hover {
+  background-color: var(--sacco-green);
+  border-color: var(--sacco-green);
+  transform: translateY(-2px);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-info:hover,
+.btn-outline-warning:hover,
+.btn-outline-secondary:hover {
+  transform: translateY(-2px);
+}
+
+.opacity-75 {
+  opacity: 0.8;
+}
+
+/* Financial Cards Icons */
+.card .fas {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* Table Styling */
+.table-hover tbody tr:hover {
+  background-color: rgba(30, 58, 138, 0.05);
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.5em 0.75em;
+}
