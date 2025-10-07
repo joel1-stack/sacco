@@ -11,8 +11,8 @@ interface LoginRequest {
 }
 
 interface RegisterRequest {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   password: string;
@@ -36,7 +36,7 @@ export class Auth {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('access_token');
       if (token) {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         this.currentUserSubject.next(user);
@@ -44,12 +44,13 @@ export class Auth {
     }
   }
 
-  login(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.api.post<AuthResponse>('/auth/login/', credentials)
+  login(credentials: any): Observable<any> {
+    return this.api.post('/auth/login/', credentials)
       .pipe(
-        tap(response => {
+        tap((response: any) => {
           if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('token', response.token);
+            localStorage.setItem('access_token', response.access);
+            localStorage.setItem('refresh_token', response.refresh);
             localStorage.setItem('user', JSON.stringify(response.user));
           }
           this.currentUserSubject.next(response.user);
@@ -57,22 +58,23 @@ export class Auth {
       );
   }
 
-  register(userData: RegisterRequest): Observable<AuthResponse> {
-    return this.api.post<AuthResponse>('/auth/register/', userData);
+  register(userData: any): Observable<any> {
+    return this.api.post('/auth/register/', userData);
   }
 
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('token');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
     }
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   isAuthenticated(): boolean {
     if (isPlatformBrowser(this.platformId)) {
-      return !!localStorage.getItem('token');
+      return !!localStorage.getItem('access_token');
     }
     return false;
   }
@@ -82,6 +84,6 @@ export class Auth {
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this.api.post('/auth/forgot-password/', { email });
+    return this.api.post('/auth/password-reset/', { email });
   }
 }

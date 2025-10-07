@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { Header } from '../layout/header/header';
-import { Footer } from '../layout/footer/footer';
-import { AnimatedBackground } from '../shared/animated-background/animated-background';
 import { Auth } from '../../services/auth';
+import { Api } from '../../services/api';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, RouterModule, Header, Footer, AnimatedBackground],
+  imports: [CommonModule, RouterModule, Header],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -23,9 +22,13 @@ export class Dashboard implements OnInit {
   recentTransactions: any[] = [];
   loading = true;
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private auth: Auth, private router: Router, private api: Api) {}
 
   ngOnInit(): void {
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['/home']);
+      return;
+    }
     this.loadDashboardData();
   }
 
@@ -38,32 +41,26 @@ export class Dashboard implements OnInit {
   }
 
   loadDashboardData(): void {
-    setTimeout(() => {
-      if (this.auth.isAuthenticated()) {
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.api.get('/dashboard/').subscribe({
+      next: (data: any) => {
         this.financialSummary = {
-          totalSavings: 25000,
-          totalShares: 15000,
-          activeLoans: 50000,
-          availableCredit: 75000
-        };
-        
-        this.recentTransactions = [
-          { id: 1, type: 'Deposit', amount: 5000, date: new Date(), description: 'Salary deposit' },
-          { id: 2, type: 'Withdrawal', amount: -2000, date: new Date(), description: 'ATM withdrawal' },
-          { id: 3, type: 'Loan Payment', amount: -3000, date: new Date(), description: 'Monthly loan payment' }
-        ];
-      } else {
-        this.financialSummary = {
-          totalSavings: 0,
+          totalSavings: parseFloat(data.accounts_summary?.total_balance || '0'),
           totalShares: 0,
-          activeLoans: 0,
+          activeLoans: data.loans_summary?.total_balance || 0,
           availableCredit: 0
         };
-        
-        this.recentTransactions = [];
+        this.recentTransactions = data.recent_transactions || [];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Dashboard data error:', err);
+        this.loading = false;
       }
-      
-      this.loading = false;
-    }, 1000);
+    });
   }
 }

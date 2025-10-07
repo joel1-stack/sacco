@@ -1,1 +1,70 @@
-<p>deposit works!</p>
+<app-header></app-header>
+
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Make Deposit</h3>
+          <p class="text-muted mb-0">Add money to your account</p>
+        </div>
+        
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="success">
+            Deposit successful! Your account has been credited.
+          </div>
+
+          <form [formGroup]="depositForm" (ngSubmit)="onSubmit()" *ngIf="!success">
+            <div class="mb-3">
+              <label for="account_id" class="form-label">Select Account</label>
+              <select 
+                class="form-control" 
+                id="account_id" 
+                formControlName="account_id"
+                [class.is-invalid]="depositForm.get('account_id')?.invalid && depositForm.get('account_id')?.touched">
+                <option value="">Choose account</option>
+                <option *ngFor="let account of accounts" [value]="account.id">
+                  {{ account.account_type }} - {{ account.account_number }}
+                </option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="amount" class="form-label">Amount (KSh)</label>
+              <input 
+                type="number" 
+                class="form-control" 
+                id="amount" 
+                formControlName="amount"
+                [class.is-invalid]="depositForm.get('amount')?.invalid && depositForm.get('amount')?.touched">
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="description" 
+                formControlName="description"
+                placeholder="e.g., Salary deposit"
+                [class.is-invalid]="depositForm.get('description')?.invalid && depositForm.get('description')?.touched">
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" routerLink="/dashboard">Cancel</button>
+              <button 
+                type="submit" 
+                class="btn btn-success" 
+                [disabled]="depositForm.invalid || loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ loading ? 'Processing...' : 'Make Deposit' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,103 @@
-<p>loan-application works!</p>
+<app-header></app-header>
+
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Loan Application</h3>
+          <p class="text-muted mb-0">Apply for a loan with SaccoNova</p>
+        </div>
+        
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="success">
+            Loan application submitted successfully! Redirecting to loans page...
+          </div>
+
+          <form [formGroup]="loanForm" (ngSubmit)="onSubmit()" *ngIf="!success">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="loan_type" class="form-label">Loan Type</label>
+                <select 
+                  class="form-control" 
+                  id="loan_type" 
+                  formControlName="loan_type"
+                  [class.is-invalid]="loanForm.get('loan_type')?.invalid && loanForm.get('loan_type')?.touched">
+                  <option value="">Select loan type</option>
+                  <option *ngFor="let type of loanTypes" [value]="type.value">{{ type.label }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="amount_requested" class="form-label">Loan Amount (KSh)</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="amount_requested" 
+                  formControlName="amount_requested"
+                  [class.is-invalid]="loanForm.get('amount_requested')?.invalid && loanForm.get('amount_requested')?.touched">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="purpose" class="form-label">Purpose of Loan</label>
+              <textarea 
+                class="form-control" 
+                id="purpose" 
+                rows="3"
+                formControlName="purpose"
+                [class.is-invalid]="loanForm.get('purpose')?.invalid && loanForm.get('purpose')?.touched"
+                placeholder="Describe the purpose of your loan..."></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="term_months" class="form-label">Repayment Period (Months)</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="term_months" 
+                  formControlName="term_months"
+                  [class.is-invalid]="loanForm.get('term_months')?.invalid && loanForm.get('term_months')?.touched">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="interest_rate" class="form-label">Interest Rate (%)</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="interest_rate" 
+                  formControlName="interest_rate"
+                  readonly
+                  [class.is-invalid]="loanForm.get('interest_rate')?.invalid && loanForm.get('interest_rate')?.touched">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="collateral" class="form-label">Collateral (Optional)</label>
+              <textarea 
+                class="form-control" 
+                id="collateral" 
+                rows="2"
+                formControlName="collateral"
+                placeholder="Describe any collateral you can provide..."></textarea>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" routerLink="/dashboard">Cancel</button>
+              <button 
+                type="submit" 
+                class="btn btn-primary" 
+                [disabled]="loanForm.invalid || loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ loading ? 'Submitting...' : 'Submit Application' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,10 +6,24 @@
     </div>
 
     <div class="alert alert-success" *ngIf="success">
-      Registration successful! Redirecting to login...
+      Registration successful! Please login to access your account.
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="!success">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="username" 
+          formControlName="username"
+          [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+        <div class="invalid-feedback" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+          <span *ngIf="registerForm.get('username')?.errors?.['required']">Username is required</span>
+          <span *ngIf="registerForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters</span>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="firstName" class="form-label">First Name</label>

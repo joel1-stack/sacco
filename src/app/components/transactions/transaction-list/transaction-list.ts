@@ -1,18 +1,43 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Header } from '../../layout/header/header';
 
 @Component({
   selector: 'app-transaction-list',
-  imports: [CommonModule, Header],
+  imports: [CommonModule, RouterModule, Header],
   templateUrl: './transaction-list.html',
   styleUrl: './transaction-list.css'
 })
 export class TransactionList {
-  transactions = [
-    { id: 1, type: 'Deposit', amount: 5000, date: new Date(), description: 'Salary deposit', status: 'Completed' },
-    { id: 2, type: 'Withdrawal', amount: -2000, date: new Date(), description: 'ATM withdrawal', status: 'Completed' },
-    { id: 3, type: 'Transfer', amount: -1500, date: new Date(), description: 'Transfer to John Doe', status: 'Pending' },
-    { id: 4, type: 'Loan Payment', amount: -3000, date: new Date(), description: 'Monthly loan payment', status: 'Completed' }
+  transactionTypes = [
+    {
+      title: 'Make Deposit',
+      description: 'Add money to your account',
+      icon: 'fas fa-plus-circle',
+      color: 'success',
+      route: '/transactions/deposit'
+    },
+    {
+      title: 'Withdraw Funds',
+      description: 'Take money from your account',
+      icon: 'fas fa-minus-circle',
+      color: 'danger',
+      route: '/transactions/withdraw'
+    },
+    {
+      title: 'Transfer Money',
+      description: 'Send money to another account',
+      icon: 'fas fa-exchange-alt',
+      color: 'info',
+      route: '/transactions/transfer'
+    },
+    {
+      title: 'Pay Bills',
+      description: 'Pay utilities and services',
+      icon: 'fas fa-file-invoice-dollar',
+      color: 'warning',
+      route: '/transactions/bills'
+    }
   ];
 }

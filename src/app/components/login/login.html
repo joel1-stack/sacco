@@ -7,15 +7,15 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
+        <label for="username" class="form-label">Username</label>
         <input 
-          type="email" 
+          type="text" 
           class="form-control" 
-          id="email" 
-          formControlName="email"
-          [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-          Please enter a valid email
+          id="username" 
+          formControlName="username"
+          [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        <div class="invalid-feedback" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+          Please enter your username
         </div>
       </div>
 
