@@ -29,6 +29,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--sacco-light);
   color: var(--sacco-dark);
+  padding-top: 76px;
 }
 
 /* Bootstrap Color Overrides */
